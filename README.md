@@ -8,25 +8,55 @@ Project/
 │   ├── store_pb2.py
 │   └── store_pb2_grpc.py
 │
+├── data/
+│   ├── data.json
+│   ├── data_store.py
+│   └── dataStorage.py
+│
+├── centralized/
+│   ├── cen_node.py
+│   └── ServicerCen.py
+│
+├── decentralized/
+│   ├── dec_node.py
+│   └── ServicerDes.py
+│
 ├── centralized_config.yaml
 ├── decentralized_config.yaml
+├── requirements.txt
 ├── centralized.py
 ├── decentralized.py
 ├── eval/
 │   ├── test_centralized_system.py
 │   └── test_decentralized_system.py
+│   ├── decentralized_config.yaml
+│   ├── centralized_config.yaml
 │
-└── ...
+└── README.md
+
 ```
+
 
 ## Directory Structure Explanation
 
-- **proto/**: Contains Protocol Buffer files used for defining gRPC services and messages. Generated Python files (`store_pb2.py` and `store_pb2_grpc.py`) based on `store.proto` should be stored here.
+- **proto/**: Contiene archivos de Protocol Buffers utilizados para definir los servicios y mensajes gRPC. Los archivos Python generados (`store_pb2.py` y `store_pb2_grpc.py`) basados en `store.proto` deben almacenarse aquí.
 
-- **centralized_config.yaml and decentralized_config.yaml**: YAML configuration files containing settings for the centralized and decentralized systems.
+- **data/**: Contiene los archivos relacionados con el almacenamiento de datos.
+  - **data.json**: Archivo JSON que almacena los datos.
+  - **data_store.py**: Implementación de la lógica de almacenamiento en memoria.
+  - **dataStorage.py**: Controla la carga y almacenamiento de datos en el archivo JSON y define el servicio gRPC relacionado.
 
-    - ***Centralized Format***: 
+- **centralized/**: Contiene los archivos específicos para la implementación centralizada.
+  - **cen_node.py**: Implementa la lógica para los nodos centralizados.
+  - **ServicerCen.py**: Define el servicio `KeyValueStoreServicer` para la configuración centralizada.
 
+- **decentralized/**: Contiene los archivos específicos para la implementación descentralizada.
+  - **dec_node.py**: Implementa la lógica para los nodos descentralizados.
+  - **ServicerDes.py**: Define el servicio `KeyValueStoreServicer` para la configuración descentralizada.
+
+- **centralized_config.yaml y decentralized_config.yaml**: Archivos YAML que contienen configuraciones para los sistemas centralizados y descentralizados.
+
+  - **Formato Centralizado**:
     ```yaml
     master:
       ip: <IP>
@@ -42,8 +72,7 @@ Project/
       ...
     ```
 
-    - ***Decentralized Format***: 
-
+  - **Formato Descentralizado**:
     ```yaml
     nodes:
       - id: <node_1_ID>
@@ -55,12 +84,36 @@ Project/
       ...
     ```
 
-- **eval/**: Directory containing evaluation scripts and tests.
+## Pasos para la Ejecución
 
-  - **test_centralized_system.py**: Script containing unit tests for the centralized system.
-  
-  - **test_decentralized_system.py**: Script containing unit tests for the decentralized system.
+1. **Instalar Dependencias**:
+   Asegúrate de tener instaladas las dependencias necesarias para ejecutar el proyecto. Puedes instalar las dependencias con:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Each component of the project is organized into its respective directory, facilitating clear separation of concerns and ease of navigation. The `eval` directory specifically houses test scripts for evaluating the functionality and correctness of the implemented systems.
+2. **Generar Archivos gRPC:**:
+  Si los archivos store_pb2.py y store_pb2_grpc.py no están generados, puedes generarlos utilizando el compilador de Protocol Buffers:
+   ```bash
+   python3 -m grpc_tools.protoc -I./proto --python_out=./proto --grpc_python_out=./proto ./proto/store.proto
 
-> **Note:** Students are required to define the necessary stubs for implementing the Two Phase Commit (2PC) protocol and for node registration in the system. These stubs must be manually added to the store.proto file by the students as part of their implementation.
+3. **Ejecutar la Implementación Centralizada**:
+   Inicia el sistema centralizado ejecutando el script centralized.py:
+   ```bash
+   python3 centralized.py
+   ```
+4. **Ejecutar Pruebas Centralizado:**:
+   Inicia el sistema centralizado ejecutando el script centralized.py:
+   ```bash
+   python3 eval/test_centralized_system.py
+   ```
+5. **Ejecutar la Implementación Descentralizada**:
+   Inicia el sistema descentralizado ejecutando el script decentralized.py:
+   ```bash
+   python3 decentralized.py
+   ```
+6. **Ejecutar Pruebas Descentralizado:**:
+   Inicia el sistema descentralizado ejecutando el script decentralized.py:
+   ```bash
+   python3 eval/test_decentralized_system.py
+   ```
