@@ -97,7 +97,7 @@ Project/
    ```bash
    python3 -m grpc_tools.protoc -I./proto --python_out=./proto --grpc_python_out=./proto ./proto/store.proto
 
-3. **Ejecutar la Implementación Centralizada**:
+3. **Ejecutar la Implementación Centralizada:**:
    Inicia el sistema centralizado ejecutando el script centralized.py:
    ```bash
    python3 centralized.py
@@ -107,7 +107,7 @@ Project/
    ```bash
    python3 eval/test_centralized_system.py
    ```
-5. **Ejecutar la Implementación Descentralizada**:
+5. **Ejecutar la Implementación Descentralizada:**:
    Inicia el sistema descentralizado ejecutando el script decentralized.py:
    ```bash
    python3 decentralized.py
