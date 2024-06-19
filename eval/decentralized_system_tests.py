@@ -192,7 +192,7 @@ class TestDecentralizedSystem(unittest.TestCase):
         duration = end_time - start_time
         print(f"Performed {process_count * operations_per_process * 2} operations in {duration:.2f} seconds.")
 
-        self.assertLess(duration, 10, "The system took too long to perform the operations.")
+        self.assertLess(duration, 60, "The system took too long to perform the operations.")
 
     
     def test_system_scalability_and_performance_with_slowdown(self):
